@@ -36,6 +36,23 @@ public class ContactsManager {
         printMenu();
 
 
+        //String directory = "./src/lecturedata";
+        //        String filename = "groceryList.txt";
+        //        Path dataDirectory = Paths.get(directory);       //method
+        //        Path dataFile = Paths.get(directory, filename); //overloaded method to get both
+        //        System.out.println("dataFile = " + dataFile);
+        //
+        //        //create the directory if it doesn't already exist
+        //        if(Files.notExists(dataDirectory)){
+        //            Files.createDirectories(dataDirectory);
+        //        }
+        //
+        //        //create the file if it doesn't already exist
+        //        if(Files.notExists(dataFile)){
+        //            Files.createFile(dataFile);
+        //        }
+
+
 
     }
 
