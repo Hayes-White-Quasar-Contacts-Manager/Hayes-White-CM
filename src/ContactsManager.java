@@ -89,15 +89,18 @@ public class ContactsManager {
 
 
 
-    public static List<String> choiceTwo() {
+    public static void choiceTwo() {
 
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Enter a name: ");
         String createName = scanner.nextLine();
         System.out.println("Enter a number: ");
-        Integer createNumber = scanner.nextInt();
-        System.out.printf("Name: %s\nNumber: %d", createName, createNumber);
+        String createNumber = scanner.nextLine();
+        String createNameNumber = createName + " | " + createNumber;
+
+        System.out.printf("Name: %s\nNumber: %s", createName, createNumber);
+        System.out.println();
 
         String directory = "./src/ContactDatabase";
         String filename = "contacts.txt";
@@ -127,15 +130,16 @@ public class ContactsManager {
 
         try {
             Files.write(contactTxtPath, contactList);
-            List <String> printList = Files.readAllLines(contactTxtPath);
+//            List <String> printList = Files.readAllLines(contactTxtPath);
 
             //if we don't want to overwrite our list
-            Files.write(contactTxtPath, Arrays.asList(String createName, Integer createNumber), StandardOpenOption.APPEND);
+            Files.write(contactTxtPath, List.of(createNameNumber), StandardOpenOption.APPEND);
 
+            List <String> printList = Files.readAllLines(contactTxtPath);
 
             //Custom print method
             for(int i = 0; i < printList.size(); i+=1){
-                System.out.println((i + 1) + ": " + printList.get(i));
+                System.out.println((i + 1) + " | " + printList.get(i));
             }
 
         }
@@ -145,7 +149,6 @@ public class ContactsManager {
             e.getMessage();
         }
 
-        return choiceTwo();
     }
 
 
