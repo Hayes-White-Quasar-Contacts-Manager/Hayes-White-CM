@@ -169,14 +169,20 @@ public class ContactsManager {
             //if we don't want to overwrite our list
             List <String> contactList = Files.readAllLines(contactTxtPath);
 
-            //Custom print method
-            for(String line : contactList){
 
-                if(line.contains(userSearch)){
-                    System.out.println(line);
+
+                //Custom print method
+                for (String line : contactList) {
+
+
+                    if (line.contains(userSearch)) {
+                        System.out.println(line);
+                    }
+
+
                 }
 
-            }
+
 
 
         }
