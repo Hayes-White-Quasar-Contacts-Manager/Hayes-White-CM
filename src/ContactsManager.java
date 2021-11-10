@@ -29,6 +29,7 @@ public class ContactsManager {
             choiceTwo();
         } else if(userOption == 3){
             System.out.println("you entered 3");
+            choiceThree();
         } else if(userOption == 4){
             System.out.println("you entered 4");
         } else if(userOption == 5){
@@ -145,6 +146,53 @@ public class ContactsManager {
 
 
 
+    public static void choiceThree() {
+
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter a name: ");
+        String userSearch = scanner.nextLine();
+
+        String directory = "./src/ContactDatabase";
+        String filename = "contacts.txt";
+        Path dataDirectory = Paths.get(directory);       //method
+        Path dataFile = Paths.get(directory, filename); //overloaded method to get both
+
+
+
+
+        Path contactTxtPath = Paths.get(directory, filename);
+
+
+        try {
+
+            //if we don't want to overwrite our list
+            List <String> contactList = Files.readAllLines(contactTxtPath);
+
+            //Custom print method
+            for(String line : contactList){
+
+                if(line.contains(userSearch)){
+                    System.out.println(line);
+                }
+
+            }
+
+
+        }
+        catch (Exception e) {
+            System.out.println("Something went wrong :(");
+            e.printStackTrace();
+            e.getMessage();
+        }
+
+
+        //update one item
+        //get the current groceryList
+
+
+
+    }
 
 
 
