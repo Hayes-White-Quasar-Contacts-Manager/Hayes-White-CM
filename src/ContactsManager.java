@@ -67,12 +67,7 @@ public class ContactsManager {
 
         Path contactTxtPath = Paths.get(directory, filename);
 
-//        List<String> contactList = Arrays.asList("Mary | 2101234567", "Rhiannon | 2107899956", "Sally | 2104651234");
-//        List<String> contactList = Arrays.asList(contactTxtPath.toString());
-
-
         try {
-//            Files.write(contactTxtPath, contactList);
             List <String> printList = Files.readAllLines(contactTxtPath);
 
             //Custom print method
@@ -127,10 +122,7 @@ public class ContactsManager {
 
         Path contactTxtPath = Paths.get(directory, filename);
 
-//        List<String> contactList = Arrays.asList("Mary | 2101234567", "Rhiannon | 2107899956", "Sally | 2104651234");
-
         try {
-//            Files.write(contactTxtPath, createNameNumber);
 
             //if we don't want to overwrite our list
             Files.write(contactTxtPath, List.of(createNameNumber), StandardOpenOption.APPEND);
