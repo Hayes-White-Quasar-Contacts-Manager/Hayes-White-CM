@@ -3,6 +3,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -40,7 +41,7 @@ public class ContactsManager {
 
 
 
-    public static List<String> choiceOne() {
+    public static void choiceOne() {
 
         String directory = "./src/ContactDatabase";
         String filename = "contacts.txt";
@@ -66,10 +67,12 @@ public class ContactsManager {
 
         Path contactTxtPath = Paths.get(directory, filename);
 
-        List<String> contactList = Arrays.asList("Mary | 2101234567", "Rhiannon | 2107899956", "Sally | 2104651234");
+//        List<String> contactList = Arrays.asList("Mary | 2101234567", "Rhiannon | 2107899956", "Sally | 2104651234");
+//        List<String> contactList = Arrays.asList(contactTxtPath.toString());
+
 
         try {
-            Files.write(contactTxtPath, contactList);
+//            Files.write(contactTxtPath, contactList);
             List <String> printList = Files.readAllLines(contactTxtPath);
 
             //Custom print method
@@ -83,8 +86,6 @@ public class ContactsManager {
             e.printStackTrace();
             e.getMessage();
         }
-
-        return contactList;
     }
 
 
@@ -126,11 +127,10 @@ public class ContactsManager {
 
         Path contactTxtPath = Paths.get(directory, filename);
 
-        List<String> contactList = Arrays.asList("Mary | 2101234567", "Rhiannon | 2107899956", "Sally | 2104651234");
+//        List<String> contactList = Arrays.asList("Mary | 2101234567", "Rhiannon | 2107899956", "Sally | 2104651234");
 
         try {
-            Files.write(contactTxtPath, contactList);
-//            List <String> printList = Files.readAllLines(contactTxtPath);
+//            Files.write(contactTxtPath, createNameNumber);
 
             //if we don't want to overwrite our list
             Files.write(contactTxtPath, List.of(createNameNumber), StandardOpenOption.APPEND);
