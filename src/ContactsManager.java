@@ -10,10 +10,14 @@ import java.util.Scanner;
 
 public class ContactsManager {
     //menu method
-    public static int printMenu(){
+    public static void printMenu(){
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Hello, welcome to the contacts manager. Select an option:");
+
+
+        boolean confirmed; //declares boolean confirm
+
         System.out.println("1. View contacts.\n" +
                 "2. Add a new contact.\n" +
                 "3. Search a contact by name.\n" +
@@ -32,14 +36,31 @@ public class ContactsManager {
             choiceThree();
         } else if(userOption == 4){
             System.out.println("you entered 4");
+            choiceFour();
         } else if(userOption == 5){
             System.out.println("goodbye");
         } else {
             printMenu();
         }
-        return userOption;
+
     }
 
+
+    public static void keepGoing() {
+
+        Scanner scanner = new Scanner(System.in);
+
+        boolean confirmed;
+        System.out.print("Do you want to see the menu again? [Y/N] ");
+        String userConfirm = scanner.nextLine();
+        confirmed = userConfirm.equalsIgnoreCase("y"); //confirm = y
+
+        if(confirmed) {
+            printMenu();
+        }
+
+
+    }
 
 
     public static void choiceOne() {
@@ -82,6 +103,10 @@ public class ContactsManager {
             e.printStackTrace();
             e.getMessage();
         }
+
+
+        keepGoing();
+
     }
 
 
@@ -142,6 +167,8 @@ public class ContactsManager {
             e.getMessage();
         }
 
+        keepGoing();
+
     }
 
 
@@ -155,8 +182,7 @@ public class ContactsManager {
 
         String directory = "./src/ContactDatabase";
         String filename = "contacts.txt";
-        Path dataDirectory = Paths.get(directory);       //method
-        Path dataFile = Paths.get(directory, filename); //overloaded method to get both
+
 
 
 
@@ -193,17 +219,58 @@ public class ContactsManager {
         }
 
 
-        //update one item
-        //get the current groceryList
+        keepGoing();
+
+    }
+
+
+    private static void choiceFour() {
+
+
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter a name to delete the contact: ");
+        String userDelete = scanner.nextLine();
+
+        String directory = "./src/ContactDatabase";
+        String filename = "contacts.txt";
+
+
+        Path contactTxtPath = Paths.get(directory, filename);
+
+
+        try {
+
+            //if we don't want to overwrite our list
+            List <String> printList = Files.readAllLines(contactTxtPath);
+
+
+
+            //Custom print method
+            for (String line : printList) {
+
+
+                if (line.contains(userDelete)) {
+                    printList.remove(line);
+                    System.out.println("You are deleting: " + line);
+                    Files.write(contactTxtPath, printList);
+                }
+
+
+            }
+
+        }
+        catch (Exception e) {
+            keepGoing();
+            e.getMessage();
+        }
 
 
 
     }
 
 
-
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
 
         //call the menu method
         printMenu();
