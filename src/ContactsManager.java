@@ -32,6 +32,7 @@ public class ContactsManager {
             choiceThree();
         } else if(userOption == 4){
             System.out.println("you entered 4");
+            choiceFour();
         } else if(userOption == 5){
             System.out.println("goodbye");
         } else {
@@ -39,6 +40,7 @@ public class ContactsManager {
         }
         return userOption;
     }
+
 
 
 
@@ -155,8 +157,7 @@ public class ContactsManager {
 
         String directory = "./src/ContactDatabase";
         String filename = "contacts.txt";
-        Path dataDirectory = Paths.get(directory);       //method
-        Path dataFile = Paths.get(directory, filename); //overloaded method to get both
+
 
 
 
@@ -193,13 +194,56 @@ public class ContactsManager {
         }
 
 
-        //update one item
-        //get the current groceryList
-
 
 
     }
 
+
+    private static void choiceFour() {
+
+
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter a name to delete the contact: ");
+        String userDelete = scanner.nextLine();
+
+        String directory = "./src/ContactDatabase";
+        String filename = "contacts.txt";
+
+
+        Path contactTxtPath = Paths.get(directory, filename);
+
+
+        try {
+
+            //if we don't want to overwrite our list
+            List <String> printList = Files.readAllLines(contactTxtPath);
+
+
+
+            //Custom print method
+            for (String line : printList) {
+
+
+                if (line.contains(userDelete)) {
+                    printList.remove(line);
+                    System.out.println("You are deleting: " + line);
+                    Files.write(contactTxtPath, printList);
+                }
+
+
+            }
+
+
+        }
+        catch (Exception e) {
+            System.out.println("Something went wrong :(");
+            e.printStackTrace();
+            e.getMessage();
+        }
+
+
+    }
 
 
     public static void main(String[] args) {
