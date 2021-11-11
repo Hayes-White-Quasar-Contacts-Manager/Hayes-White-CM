@@ -3,20 +3,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class ContactsManager {
     //menu method
     public static void printMenu(){
         Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Hello, welcome to the contacts manager. Select an option:");
-
-
-        boolean confirmed; //declares boolean confirm
 
         System.out.println("1. View contacts.\n" +
                 "2. Add a new contact.\n" +
@@ -24,22 +16,27 @@ public class ContactsManager {
                 "4. Delete an existing contact.\n" +
                 "5. Exit.\n" +
                 "Enter an option (1, 2, 3, 4 or 5):");
-        int userOption = scanner.nextInt();
-        if(userOption == 1){
-            System.out.println("you entered 1");
-            choiceOne();
-        } else if(userOption == 2){
-            System.out.println("you entered 2");
-            choiceTwo();
-        } else if(userOption == 3){
-            System.out.println("you entered 3");
-            choiceThree();
-        } else if(userOption == 4){
-            System.out.println("you entered 4");
-            choiceFour();
-        } else if(userOption == 5){
-            System.out.println("goodbye");
-        } else {
+        try {
+            int userOption = scanner.nextInt();
+            if (userOption == 1) {
+                System.out.println("You entered 1");
+                choiceOne();
+            } else if (userOption == 2) {
+                System.out.println("You entered 2");
+                choiceTwo();
+            } else if (userOption == 3) {
+                System.out.println("You entered 3");
+                choiceThree();
+            } else if (userOption == 4) {
+                System.out.println("You entered 4");
+                choiceFour();
+            } else if (userOption == 5) {
+                System.out.println("Goodbye");
+            } else {
+                printMenu();
+            }
+        }catch(InputMismatchException e){
+            System.err.println("Enter a valid number.");
             printMenu();
         }
 
@@ -53,12 +50,13 @@ public class ContactsManager {
         boolean confirmed;
         System.out.print("Do you want to see the menu again? [Y/N] ");
         String userConfirm = scanner.nextLine();
-        confirmed = userConfirm.equalsIgnoreCase("y"); //confirm = y
+        confirmed = userConfirm.equalsIgnoreCase("y");
 
         if(confirmed) {
             printMenu();
+        } else{
+            System.out.println("Goodbye");
         }
-
 
     }
 
@@ -67,9 +65,8 @@ public class ContactsManager {
 
         String directory = "./src/ContactDatabase";
         String filename = "contacts.txt";
-        Path dataDirectory = Paths.get(directory);       //method
-        Path dataFile = Paths.get(directory, filename); //overloaded method to get both
-
+        Path dataDirectory = Paths.get(directory);
+        Path dataFile = Paths.get(directory, filename);
 
         try {
             //create the directory if it doesn't already exist
@@ -104,7 +101,6 @@ public class ContactsManager {
             e.getMessage();
         }
 
-
         keepGoing();
 
     }
@@ -117,18 +113,24 @@ public class ContactsManager {
 
         System.out.println("Enter a name: ");
         String createName = scanner.nextLine();
-        System.out.println("Enter a number: ");
-        String createNumber = scanner.nextLine();
-        String createNameNumber = createName + " | " + createNumber;
+        String createNumber;
+        do{
+            System.out.println("Enter a number: ");
+            createNumber = scanner.nextLine();
+        }while(createNumber.length() < 7 || createNumber.length() > 15);
 
-        System.out.printf("Name: %s\nNumber: %s", createName, createNumber);
+        String formattedNumber = createNumber.substring(0, 3) + "-" + createNumber.substring(3,6) + "-" + createNumber.substring(6);
+
+
+        String createNameNumber = createName + " | " + formattedNumber;
+
+        System.out.printf("Name: %s\nNumber: %s", createName, formattedNumber);
         System.out.println();
 
         String directory = "./src/ContactDatabase";
         String filename = "contacts.txt";
-        Path dataDirectory = Paths.get(directory);       //method
-        Path dataFile = Paths.get(directory, filename); //overloaded method to get both
-
+        Path dataDirectory = Paths.get(directory);
+        Path dataFile = Paths.get(directory, filename);
 
         try {
             //create the directory if it doesn't already exist
@@ -149,14 +151,18 @@ public class ContactsManager {
         Path contactTxtPath = Paths.get(directory, filename);
 
         try {
-
             //if we don't want to overwrite our list
+
             Files.write(contactTxtPath, List.of(createNameNumber), StandardOpenOption.APPEND);
 
             List <String> printList = Files.readAllLines(contactTxtPath);
 
             //Custom print method
             for(int i = 0; i < printList.size(); i+=1){
+                if(printList.contains(createName) && printList.contains(createNumber)){
+                    System.out.println("That contact already exists.");
+                    break;
+                }
                 System.out.println((i + 1) + " | " + printList.get(i));
             }
 
@@ -183,34 +189,16 @@ public class ContactsManager {
         String directory = "./src/ContactDatabase";
         String filename = "contacts.txt";
 
-
-
-
-
         Path contactTxtPath = Paths.get(directory, filename);
 
-
         try {
-
-            //if we don't want to overwrite our list
             List <String> contactList = Files.readAllLines(contactTxtPath);
-
-
-
-                //Custom print method
-                for (String line : contactList) {
-
-
-                    if (line.contains(userSearch)) {
-                        System.out.println(line);
-                    }
-
-
+            for (String line : contactList) {
+                if (line.contains(userSearch)) {
+                    System.out.println("We found a match: \n" + line);
+                    break;
                 }
-
-
-
-
+            }
         }
         catch (Exception e) {
             System.out.println("Something went wrong :(");
@@ -218,14 +206,12 @@ public class ContactsManager {
             e.getMessage();
         }
 
-
         keepGoing();
 
     }
 
 
     private static void choiceFour() {
-
 
         Scanner scanner = new Scanner(System.in);
 
@@ -235,44 +221,31 @@ public class ContactsManager {
         String directory = "./src/ContactDatabase";
         String filename = "contacts.txt";
 
-
         Path contactTxtPath = Paths.get(directory, filename);
-
 
         try {
 
-            //if we don't want to overwrite our list
             List <String> printList = Files.readAllLines(contactTxtPath);
 
-
-
-            //Custom print method
             for (String line : printList) {
-
 
                 if (line.contains(userDelete)) {
                     printList.remove(line);
                     System.out.println("You are deleting: " + line);
                     Files.write(contactTxtPath, printList);
                 }
-
-
             }
-
         }
         catch (Exception e) {
-            keepGoing();
             e.getMessage();
         }
-
-
-
+        keepGoing();
     }
 
 
     public static void main(String[] args) {
 
-        //call the menu method
+        System.out.println("Hello, welcome to the contacts manager. Select an option:");
         printMenu();
 
 
