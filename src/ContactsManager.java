@@ -3,10 +3,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class ContactsManager {
     //menu method
@@ -19,22 +16,27 @@ public class ContactsManager {
                 "4. Delete an existing contact.\n" +
                 "5. Exit.\n" +
                 "Enter an option (1, 2, 3, 4 or 5):");
-        int userOption = scanner.nextInt();
-        if(userOption == 1){
-            System.out.println("You entered 1");
-            choiceOne();
-        } else if(userOption == 2){
-            System.out.println("You entered 2");
-            choiceTwo();
-        } else if(userOption == 3){
-            System.out.println("You entered 3");
-            choiceThree();
-        } else if(userOption == 4){
-            System.out.println("You entered 4");
-            choiceFour();
-        } else if(userOption == 5){
-            System.out.println("Goodbye");
-        } else {
+        try {
+            int userOption = scanner.nextInt();
+            if (userOption == 1) {
+                System.out.println("You entered 1");
+                choiceOne();
+            } else if (userOption == 2) {
+                System.out.println("You entered 2");
+                choiceTwo();
+            } else if (userOption == 3) {
+                System.out.println("You entered 3");
+                choiceThree();
+            } else if (userOption == 4) {
+                System.out.println("You entered 4");
+                choiceFour();
+            } else if (userOption == 5) {
+                System.out.println("Goodbye");
+            } else {
+                printMenu();
+            }
+        }catch(InputMismatchException e){
+            System.err.println("Enter a valid number.");
             printMenu();
         }
 
