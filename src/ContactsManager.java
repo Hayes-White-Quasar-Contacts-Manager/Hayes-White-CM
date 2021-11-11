@@ -10,10 +10,14 @@ import java.util.Scanner;
 
 public class ContactsManager {
     //menu method
-    public static int printMenu(){
+    public static void printMenu(){
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Hello, welcome to the contacts manager. Select an option:");
+
+
+        boolean confirmed; //declares boolean confirm
+
         System.out.println("1. View contacts.\n" +
                 "2. Add a new contact.\n" +
                 "3. Search a contact by name.\n" +
@@ -38,10 +42,25 @@ public class ContactsManager {
         } else {
             printMenu();
         }
-        return userOption;
+
     }
 
 
+    public static void keepGoing() {
+
+        Scanner scanner = new Scanner(System.in);
+
+        boolean confirmed;
+        System.out.print("Do you want to see the menu again? [Y/N] ");
+        String userConfirm = scanner.nextLine();
+        confirmed = userConfirm.equalsIgnoreCase("y"); //confirm = y
+
+        if(confirmed) {
+            printMenu();
+        }
+
+
+    }
 
 
     public static void choiceOne() {
@@ -84,6 +103,10 @@ public class ContactsManager {
             e.printStackTrace();
             e.getMessage();
         }
+
+
+        keepGoing();
+
     }
 
 
@@ -144,6 +167,8 @@ public class ContactsManager {
             e.getMessage();
         }
 
+        keepGoing();
+
     }
 
 
@@ -194,7 +219,7 @@ public class ContactsManager {
         }
 
 
-
+        keepGoing();
 
     }
 
@@ -234,20 +259,18 @@ public class ContactsManager {
 
             }
 
-
         }
         catch (Exception e) {
-            System.out.println("Something went wrong :(");
-            e.printStackTrace();
+            keepGoing();
             e.getMessage();
         }
+
 
 
     }
 
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
 
         //call the menu method
         printMenu();
