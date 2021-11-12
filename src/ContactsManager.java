@@ -193,12 +193,16 @@ public class ContactsManager {
 
         try {
             List <String> contactList = Files.readAllLines(contactTxtPath);
+            String message = "";
             for (String line : contactList) {
                 if (line.contains(userSearch)) {
-                    System.out.println("We found a match: \n" + line);
+                    message = "We found a match: \n" + line;
                     break;
+                } else {
+                    message = "No match found.";
                 }
             }
+            System.out.println(message);
         }
         catch (Exception e) {
             System.out.println("Something went wrong :(");
@@ -226,21 +230,29 @@ public class ContactsManager {
         try {
 
             List <String> printList = Files.readAllLines(contactTxtPath);
+            List<String> newList = new ArrayList<>();
 
             for (String line : printList) {
 
                 if (line.contains(userDelete)) {
-                    printList.remove(line);
+//                    printList.remove(line);  //we don't need this line
                     System.out.println("You are deleting: " + line);
-                    Files.write(contactTxtPath, printList);
+                    continue;
+                } else {
+                    newList.add(line);
                 }
             }
+            Files.write(contactTxtPath, newList);
+
         }
         catch (Exception e) {
             e.getMessage();
+            e.printStackTrace();
         }
         keepGoing();
+
     }
+
 
 
     public static void main(String[] args) {
